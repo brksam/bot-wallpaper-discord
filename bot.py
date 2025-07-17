@@ -8,6 +8,14 @@ import shutil
 from discord.ext import commands
 from bs4 import BeautifulSoup
 
+# Debug: Verificar se as variáveis estão sendo lidas
+print("=== DEBUG: Verificando variáveis de ambiente ===")
+print(f"TOKEN: {'CONFIGURADO' if os.environ.get('TOKEN') else 'NÃO CONFIGURADO'}")
+print(f"CHANNEL_ID: {os.environ.get('CHANNEL_ID', 'NÃO CONFIGURADO')}")
+print(f"REDDIT_CLIENT_ID: {'CONFIGURADO' if os.environ.get('REDDIT_CLIENT_ID') else 'NÃO CONFIGURADO'}")
+print(f"WALLHAVEN_API_KEY: {'CONFIGURADO' if os.environ.get('WALLHAVEN_API_KEY') else 'NÃO CONFIGURADO'}")
+print("================================================")
+
 # Insira o token do seu bot aqui
 TOKEN = os.environ.get('TOKEN')
 # ID do canal onde o bot vai enviar os wallpapers
@@ -245,4 +253,10 @@ async def engine(ctx):
     )
     await ctx.send(msg)
 
+# Verificar se o token está configurado antes de tentar conectar
+if not TOKEN:
+    print("ERRO: TOKEN não configurado! Verifique a variável de ambiente TOKEN no Railway.")
+    exit(1)
+
+print(f"Tentando conectar com token: {TOKEN[:10]}...")
 bot.run(TOKEN) 
